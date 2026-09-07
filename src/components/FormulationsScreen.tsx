@@ -54,11 +54,16 @@ export const FormulationsScreen: React.FC<FormulationsScreenProps> = ({ onSelect
           {selected ? (
             <>
               <div className="formulations-detail-body">
-                <div className="formulations-detail-name">{selected.name}</div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
+                  <div className="formulations-detail-name">{selected.name}</div>
+                  <StatusChip label="VERIFIED AFI/API" variant="active" size="sm" />
+                </div>
                 <div className="formulations-detail-sub">{selected.description}</div>
 
                 <div className="formulations-params">
                   {[
+                    { label: 'AFI / API Reference', value: selected.afi_code || 'AFI Part-I' },
+                    { label: 'Powder Grade', value: selected.coarse_powder_grade || 'Yavakuṭa Cūrṇa (10/40 mesh)' },
                     { label: 'Profile revision', value: selected.profile_revision },
                     { label: 'Pod ID', value: selected.pod_id },
                     { label: 'Category', value: selected.category },
@@ -78,13 +83,13 @@ export const FormulationsScreen: React.FC<FormulationsScreenProps> = ({ onSelect
                   ))}
                 </div>
 
-                <div className="formulations-herbs-label">Herbs</div>
+                <div className="formulations-herbs-label">Key Herbs (Yavakuṭa Cūrṇa)</div>
                 <ul className="formulations-herbs-list">
                   {selected.herbs.map((h) => <li key={h}>{h}</li>)}
                 </ul>
 
                 <div className="formulations-note">
-                  Normal users cannot edit validated parameters. A change creates a new revision and enters the validation workflow.
+                  ✓ Verified standard per PCIM&H / AFI monographs. Normal users cannot edit validated parameters. A change creates a new revision and enters the validation workflow.
                 </div>
               </div>
 

@@ -101,7 +101,7 @@ export const PodScreen: React.FC<PodScreenProps> = ({ podState, formulation, onC
           </div>
 
           <div className="pod-herbs">
-            <div className="pod-herbs-label">Herbs</div>
+            <div className="pod-herbs-label">Key Herbs (Yavakuṭa Cūrṇa)</div>
             <div className="pod-herbs-list">{formulation.herbs.join(' · ')}</div>
           </div>
 

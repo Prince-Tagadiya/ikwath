@@ -106,6 +106,8 @@ export interface FormulationProfile {
   herbs: string[];
   category: string;
   tag: string;
+  afi_code?: string;
+  coarse_powder_grade?: string;
 }
 
 // ─── Legacy Recipe (backward compat) ─────────────────────────────────────────
