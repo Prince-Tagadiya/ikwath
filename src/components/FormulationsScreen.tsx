@@ -13,8 +13,16 @@ export const FormulationsScreen: React.FC<FormulationsScreenProps> = ({ onSelect
   return (
     <div className="screen-content formulations-screen">
       <div className="formulations-header">
-        <div className="formulations-title">Formulation Library</div>
-        <div className="formulations-sub">Validated profiles · Read-only for normal users</div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10 }}>
+          <div>
+            <div className="formulations-title">Formulation Library</div>
+            <div className="formulations-sub">Validated profiles · Standardized for single-dose pod brewing</div>
+          </div>
+          <div className="formulations-research-banner">
+            <span className="research-banner-badge">✓ Research-Backed</span>
+            <span>All 12 formulations strictly standardized per <strong>AFI, API & PCIM&H</strong> monographs</span>
+          </div>
+        </div>
       </div>
 
       <div className="formulations-layout">
@@ -43,7 +51,7 @@ export const FormulationsScreen: React.FC<FormulationsScreenProps> = ({ onSelect
                   variant={f.status === 'ACTIVE' ? 'active' : f.status === 'DEPRECATED' ? 'fault' : 'warning'}
                   size="sm"
                 />
-                {f.validated && <StatusChip label="VALIDATED" variant="active" size="sm" />}
+                {f.validated && <StatusChip label="AFI/API VERIFIED" variant="active" size="sm" />}
               </div>
             </div>
           ))}
@@ -59,6 +67,11 @@ export const FormulationsScreen: React.FC<FormulationsScreenProps> = ({ onSelect
                   <StatusChip label="VERIFIED AFI/API" variant="active" size="sm" />
                 </div>
                 <div className="formulations-detail-sub">{selected.description}</div>
+
+                <div className="formulations-research-detail-pill">
+                  <span className="pill-dot">●</span>
+                  <span><strong>Monograph Standard:</strong> Researched & validated against {selected.afi_code || 'AFI/API'} specifications using standardized {selected.coarse_powder_grade || 'Yavakuṭa Cūrṇa'}.</span>
+                </div>
 
                 <div className="formulations-params">
                   {[

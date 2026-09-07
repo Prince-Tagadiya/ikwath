@@ -2275,6 +2275,49 @@ html, body {
 
 .formulations-sub { font-size: 12.5px; color: var(--text-muted); }
 
+.formulations-research-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  color: #166534;
+  box-shadow: 0 1px 3px rgba(22, 101, 52, 0.06);
+}
+
+.research-banner-badge {
+  background: #16A34A;
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.formulations-research-detail-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #F0FDF4;
+  border: 1px solid #DCFCE7;
+  padding: 8px 12px;
+  border-radius: var(--r-md);
+  font-size: 11.5px;
+  color: #15803D;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.formulations-research-detail-pill .pill-dot {
+  color: #16A34A;
+  font-size: 8px;
+}
+
 .formulations-layout {
   display: grid;
   grid-template-columns: 1fr 1.4fr;
