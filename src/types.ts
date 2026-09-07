@@ -91,6 +91,7 @@ export interface FormulationProfile {
   id: string;
   pod_id: string;
   name: string;
+  image?: string;
   profile_revision: string;
   status: 'ACTIVE' | 'DRAFT' | 'DEPRECATED';
   validated: boolean;
