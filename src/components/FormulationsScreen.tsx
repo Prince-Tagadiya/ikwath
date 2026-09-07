@@ -8,7 +8,7 @@ interface FormulationsScreenProps {
 }
 
 export const FormulationsScreen: React.FC<FormulationsScreenProps> = ({ onSelectFormulation }) => {
-  const [selected, setSelected] = useState<FormulationProfile | null>(null);
+  const [selected, setSelected] = useState<FormulationProfile | null>(FORMULATIONS[0] ?? null);
 
   return (
     <div className="screen-content formulations-screen">
@@ -53,48 +53,51 @@ export const FormulationsScreen: React.FC<FormulationsScreenProps> = ({ onSelect
         <div className="formulations-detail">
           {selected ? (
             <>
-              <div className="formulations-detail-name">{selected.name}</div>
-              <div className="formulations-detail-sub">{selected.description}</div>
+              <div className="formulations-detail-body">
+                <div className="formulations-detail-name">{selected.name}</div>
+                <div className="formulations-detail-sub">{selected.description}</div>
 
-              <div className="formulations-params">
-                {[
-                  { label: 'Profile revision', value: selected.profile_revision },
-                  { label: 'Pod ID', value: selected.pod_id },
-                  { label: 'Category', value: selected.category },
-                  { label: 'Status', value: selected.status },
-                  { label: 'Water input', value: `${selected.water_ml} mL` },
-                  { label: 'Temp target', value: `${selected.extraction_temp_c} °C` },
-                  { label: 'Soak time', value: `${selected.soak_time_min} min` },
-                  { label: 'Extraction time', value: `${selected.extraction_time_min} min` },
-                  { label: 'Stirrer speed', value: `${selected.stirrer_rpm} RPM` },
-                  { label: 'Reduction endpoint', value: `~${selected.reduction_endpoint_g} g` },
-                  { label: 'Total runs', value: `${selected.usage_count}` },
-                ].map((p) => (
-                  <div key={p.label} className="formulations-param-row">
-                    <span className="formulations-param-label">{p.label}</span>
-                    <span className="formulations-param-value">{p.value}</span>
-                  </div>
-                ))}
-              </div>
+                <div className="formulations-params">
+                  {[
+                    { label: 'Profile revision', value: selected.profile_revision },
+                    { label: 'Pod ID', value: selected.pod_id },
+                    { label: 'Category', value: selected.category },
+                    { label: 'Status', value: selected.status },
+                    { label: 'Water input', value: `${selected.water_ml} mL` },
+                    { label: 'Temp target', value: `${selected.extraction_temp_c} °C` },
+                    { label: 'Soak time', value: `${selected.soak_time_min} min` },
+                    { label: 'Extraction time', value: `${selected.extraction_time_min} min` },
+                    { label: 'Stirrer speed', value: `${selected.stirrer_rpm} RPM` },
+                    { label: 'Reduction endpoint', value: `~${selected.reduction_endpoint_g} g` },
+                    { label: 'Total runs', value: `${selected.usage_count}` },
+                  ].map((p) => (
+                    <div key={p.label} className="formulations-param-row">
+                      <span className="formulations-param-label">{p.label}</span>
+                      <span className="formulations-param-value">{p.value}</span>
+                    </div>
+                  ))}
+                </div>
 
-              <div className="formulations-herbs-label">Herbs</div>
-              <ul className="formulations-herbs-list">
-                {selected.herbs.map((h) => <li key={h}>{h}</li>)}
-              </ul>
+                <div className="formulations-herbs-label">Herbs</div>
+                <ul className="formulations-herbs-list">
+                  {selected.herbs.map((h) => <li key={h}>{h}</li>)}
+                </ul>
 
-              <div className="formulations-note">
-                Normal users cannot edit validated parameters. A change creates a new revision and enters the validation workflow.
+                <div className="formulations-note">
+                  Normal users cannot edit validated parameters. A change creates a new revision and enters the validation workflow.
+                </div>
               </div>
 
               {onSelectFormulation && selected.validated && selected.status === 'ACTIVE' && (
-                <button
-                  id={`btn-select-formulation-${selected.id}`}
-                  className="btn-primary"
-                  style={{ marginTop: 14 }}
-                  onClick={() => onSelectFormulation(selected)}
-                >
-                  Use this formulation →
-                </button>
+                <div className="formulations-detail-footer">
+                  <button
+                    id={`btn-select-formulation-${selected.id}`}
+                    className="btn-primary"
+                    onClick={() => onSelectFormulation(selected)}
+                  >
+                    Use this formulation →
+                  </button>
+                </div>
               )}
             </>
           ) : (

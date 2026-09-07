@@ -2332,9 +2332,40 @@ html, body {
   background: #FFFFFF;
   border: 1px solid var(--line);
   border-radius: var(--r-xl);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  height: 100%;
+}
+
+.formulations-detail-body {
   padding: 22px;
   overflow-y: auto;
-  box-shadow: var(--shadow-sm);
+  flex: 1;
+  min-height: 0;
+}
+
+.formulations-detail-footer {
+  padding: 16px 22px;
+  background: #FFFFFF;
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+}
+
+.formulations-detail-footer .btn-primary {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 14px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .formulations-detail-name {
