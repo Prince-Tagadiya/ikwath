@@ -111,13 +111,12 @@ export default function App() {
     setCurrentSection('formulations');
   }, []);
 
-  // Step 2: Formulation selected → load profile + scan pod
+  // Step 2 (True 2-Tap UI): Formulation selected → load profile & go straight to "Insert Pod & Add Water" (brew-confirm)
   const handleFormulationSelected = useCallback((f: FormulationProfile) => {
     setSelectedFormulation(f);
-    setPodState('SCANNING');
-    setCurrentSection('pod');
+    setPodState('DETECTED');
     machine.scanPod(f.pod_id, f.id);
-    setTimeout(() => setPodState('DETECTED'), 2000);
+    setCurrentSection('brew-confirm');
   }, [machine]);
 
   const handlePodRetry = useCallback(() => {
@@ -223,6 +222,7 @@ export default function App() {
             waterReady={true}
             onInsertPod={handleInsertPod}
             onViewHistory={() => setCurrentSection('history')}
+            onSelectKwatha={handleFormulationSelected}
           />
         );
       case 'formulations':
@@ -249,7 +249,7 @@ export default function App() {
             waterReady={true}
             safetyOk={true}
             onStart={handleStartBrew}
-            onBack={() => setCurrentSection('pod')}
+            onBack={() => setCurrentSection('formulations')}
           />
         );
       case 'water-fill':
