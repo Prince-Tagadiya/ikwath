@@ -137,6 +137,12 @@ Judges will test your engineering depth on **how the hardware actually achieves 
 
 ---
 
+### **Q11: "Why does the brew animation take ~60 seconds in the demo if classical Kwatha takes 20 minutes?"**
+> **Answer**:
+> *"For live presentation purposes, our UI features an accelerated **20x Fast-Forward Demonstration Mode**. While the demo runs in ~60 seconds so judges can see every stage (Water Dosing → Soaking → Heating → Stirring → Reduction → Filtering → Dispense), our telemetry monitors and displays the true **simulated classical monograph time in minutes** (e.g. 20.0 minutes total, 10 min soaking, 18 min extraction, with continuous elapsed and remaining minutes). In actual physical deployment, the load cell and heating element operate in real time."*
+
+---
+
 ## 🎯 4. One-Minute Elevator Pitch Script (Memorize for Intro)
 
 > *"Respected Judges, classical Ayurvedic Kwatha is the gold standard of herbal medicine, but preparing it correctly by hand requires tedious slow reduction, precise temperature regulation, and coarse Yavakuṭa powder that must be consumed fresh within 3 hours.*

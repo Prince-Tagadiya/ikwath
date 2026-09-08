@@ -27,7 +27,7 @@ export const BrewConfirmScreen: React.FC<BrewConfirmScreenProps> = ({
     { label: 'Soak time', value: `${formulation.soak_time_min} min` },
     { label: 'Stirrer speed', value: `${formulation.stirrer_rpm} RPM (stepper motor)` },
     { label: 'Reduction endpoint', value: `~${formulation.reduction_endpoint_g} g (HX711)` },
-    { label: 'Est. total time', value: `${formulation.soak_time_min + formulation.extraction_time_min + 10} min` },
+    { label: 'Est. total time', value: `${formulation.soak_time_min + formulation.extraction_time_min + 2} min` },
   ];
 
   const checks = [

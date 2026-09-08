@@ -51,12 +51,14 @@ export default function App() {
 
   const brewInProgress = ['WATER_FILL', 'SOAKING', 'HEATING', 'STIRRING', 'REDUCTION', 'FILTRATION', 'DISPENSING'].includes(brewState.phase);
 
-  // Track sensor history for charts
+  // Track sensor history for charts (scaled to simulated classical monograph minutes)
   useEffect(() => {
     if (!brewInProgress) return;
-    const timeMin = brewState.elapsed_sec / 60;
-    setMassHistory((prev) => [...prev.slice(-100), { time: parseFloat(timeMin.toFixed(2)), mass: brewState.sensor.mass_g }]);
-    setTempHistory((prev) => [...prev.slice(-100), { time: parseFloat(timeMin.toFixed(2)), temp: brewState.sensor.temperature_c }]);
+    const totalCycleMin = (selectedFormulation?.soak_time_min ?? 10) + (selectedFormulation?.extraction_time_min ?? 18) + 2;
+    const progressRatio = Math.min(1, brewState.elapsed_sec / 64);
+    const simTimeMin = progressRatio * totalCycleMin;
+    setMassHistory((prev) => [...prev.slice(-100), { time: parseFloat(simTimeMin.toFixed(2)), mass: brewState.sensor.mass_g }]);
+    setTempHistory((prev) => [...prev.slice(-100), { time: parseFloat(simTimeMin.toFixed(2)), temp: brewState.sensor.temperature_c }]);
   }, [brewState.elapsed_sec]);
 
   // Auto-navigate based on brew phase

@@ -46,6 +46,18 @@ export const LiveBrewScreen: React.FC<LiveBrewScreenProps> = ({
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
   const { sensor, stage, phase, paused, elapsed_sec, estimated_remaining_sec, fault } = brewState;
 
+  const totalCycleMin = (formulation.soak_time_min || 10) + (formulation.extraction_time_min || 18) + 2;
+  const progressRatio = Math.min(1, elapsed_sec / 64);
+  const simElapsedMin = progressRatio * totalCycleMin;
+  const simRemainingMin = Math.max(0, totalCycleMin - simElapsedMin);
+
+  function formatSimMin(min: number): string {
+    const totalSec = Math.floor(min * 60);
+    const m = Math.floor(totalSec / 60);
+    const s = totalSec % 60;
+    return `${m}m ${String(s).padStart(2, '0')}s`;
+  }
+
   const reductionPercent = sensor.mass_g > 0 && sensor.target_mass_g > 0
     ? Math.max(0, Math.min(100, ((formulation.water_ml - sensor.mass_g) / (formulation.water_ml - sensor.target_mass_g)) * 100))
     : 0;
@@ -57,7 +69,13 @@ export const LiveBrewScreen: React.FC<LiveBrewScreenProps> = ({
       {/* Header Row */}
       <div className="brew-header">
         <div className="brew-header-left">
-          <div className="brew-title">{formulation.name.toUpperCase()}</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+            <div className="brew-title">{formulation.name.toUpperCase()}</div>
+            <div className="brew-demo-speed-badge">
+              <span className="demo-speed-icon">⚡</span>
+              <span>20x Fast-Forward Demo (Simulating {totalCycleMin} min API Cycle)</span>
+            </div>
+          </div>
           <div className="brew-subtitle">BREW #{brewNumber} · {paused ? '⏸ PAUSED' : microcopy}</div>
         </div>
         <div className="brew-header-right">
@@ -68,6 +86,29 @@ export const LiveBrewScreen: React.FC<LiveBrewScreenProps> = ({
       {/* Stage Stepper */}
       <div className="brew-stepper-row">
         <StageStepper currentStage={stage} paused={paused} />
+      </div>
+
+      {/* Simulated Time Progress Pill */}
+      <div className="brew-simulated-time-banner">
+        <div className="sim-time-item">
+          <span className="sim-time-label">Classical Cycle Time:</span>
+          <span className="sim-time-val">{totalCycleMin} minutes</span>
+        </div>
+        <div className="sim-time-divider">|</div>
+        <div className="sim-time-item">
+          <span className="sim-time-label">Simulated Time Elapsed:</span>
+          <span className="sim-time-val highlight">{formatSimMin(simElapsedMin)} ({simElapsedMin.toFixed(1)} min)</span>
+        </div>
+        <div className="sim-time-divider">|</div>
+        <div className="sim-time-item">
+          <span className="sim-time-label">Time Remaining:</span>
+          <span className="sim-time-val">{formatSimMin(simRemainingMin)} ({simRemainingMin.toFixed(1)} min)</span>
+        </div>
+        <div className="sim-time-divider">|</div>
+        <div className="sim-time-item">
+          <span className="sim-time-label">Demo Clock:</span>
+          <span className="sim-time-val muted">{formatTime(elapsed_sec)} / 01:04</span>
+        </div>
       </div>
 
       {/* Main Metrics Grid */}
@@ -115,16 +156,18 @@ export const LiveBrewScreen: React.FC<LiveBrewScreenProps> = ({
         {/* Time + Actuator Column */}
         <div className="brew-side-col">
           <MetricTile
-            label="Elapsed"
-            value={formatTime(elapsed_sec)}
-            size="md"
-            accent="muted"
-          />
-          <MetricTile
-            label="Est. remaining"
-            value={formatTime(estimated_remaining_sec)}
+            label="Simulated Elapsed"
+            value={`${simElapsedMin.toFixed(1)} min`}
+            subLabel={`${formatSimMin(simElapsedMin)}`}
             size="md"
             accent="default"
+          />
+          <MetricTile
+            label="Est. Remaining"
+            value={`${simRemainingMin.toFixed(1)} min`}
+            subLabel={`Target: ${totalCycleMin}m`}
+            size="md"
+            accent="muted"
           />
 
           {/* Actuator chips */}

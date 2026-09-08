@@ -24,12 +24,25 @@ export const ReductionScreen: React.FC<ReductionScreenProps> = ({
   const massData = massHistory.map((d) => ({ time: d.time, value: d.mass }));
   const tempData = tempHistory.map((d) => ({ time: d.time, value: d.temp }));
 
+  const totalCycleMin = (formulation.soak_time_min || 10) + (formulation.extraction_time_min || 18) + 2;
+  const progressRatio = Math.min(1, brewState.elapsed_sec / 64);
+  const simElapsedMin = progressRatio * totalCycleMin;
+  const simRemainingMin = Math.max(0, totalCycleMin - simElapsedMin);
+
   return (
     <div className="screen-content reduction-screen">
       <div className="reduction-header">
-        <div className="reduction-title">MONITOR REDUCTION</div>
-        <div className="reduction-sub">
-          Load Cell + HX711 tracking mass loss to target endpoint — not a fixed timer.
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10 }}>
+          <div>
+            <div className="reduction-title">MONITOR REDUCTION</div>
+            <div className="reduction-sub">
+              Load Cell + HX711 tracking mass loss to target endpoint — not a fixed timer.
+            </div>
+          </div>
+          <div className="brew-demo-speed-badge">
+            <span className="demo-speed-icon">⚡</span>
+            <span>20x Demo Speed · Simulated Time: {simElapsedMin.toFixed(1)} min of {totalCycleMin} min (Rem: {simRemainingMin.toFixed(1)} min)</span>
+          </div>
         </div>
       </div>
 

@@ -19,6 +19,8 @@ export const WaterFillScreen: React.FC<WaterFillScreenProps> = ({
   const fillPct = Math.min(100, (currentMass / targetMass) * 100);
   const targetReached = fillPct >= 98;
 
+  const totalCycleMin = (formulation.soak_time_min || 10) + (formulation.extraction_time_min || 18) + 2;
+
   return (
     <div className="screen-content water-fill-screen">
       {/* Stage Stepper */}
@@ -28,8 +30,16 @@ export const WaterFillScreen: React.FC<WaterFillScreenProps> = ({
 
       {/* Header */}
       <div className="wf-header">
-        <div className="wf-title">MEASURE WATER QUANTITY</div>
-        <div className="wf-sub">Load Cell + HX711 — real-time weight measurement via inlet or manual fill</div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10 }}>
+          <div>
+            <div className="wf-title">MEASURE WATER QUANTITY</div>
+            <div className="wf-sub">Load Cell + HX711 — real-time weight measurement via inlet or manual fill</div>
+          </div>
+          <div className="brew-demo-speed-badge">
+            <span className="demo-speed-icon">⚡</span>
+            <span>Target Cycle: {totalCycleMin} minutes · Fast-Forward Demo (20x)</span>
+          </div>
+        </div>
       </div>
 
       {/* Main layout */}
